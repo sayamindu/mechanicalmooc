@@ -26,7 +26,10 @@ class User
   validates_uniqueness_of :email
   validates_format_of :email, :as => :email_address
   
-  after :create, :send_welcome_email
+  after :create do
+    send_welcome_email
+    add_user_to_all_list
+  end
   
   def send_welcome_email
     RestClient.post "https://api:#{ENV['MAILGUN_API_KEY']}"\
@@ -36,6 +39,14 @@ class User
     :subject => "Hello",
     :text => "Thanks for signing up"
   end
+
+  def add_user_to_all_list
+    RestClient.post("https://api:#{ENV['MAILGUN_API_KEY']}" \
+                    "@api.mailgun.net/v2/lists/python-all/members",
+                    :address => email,
+                    :upsert => 'yes')
+  end
+
 end
 
 class Group
