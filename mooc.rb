@@ -142,7 +142,7 @@ post '/mooc-mailgun-log' do
                  :event => params.delete("event").to_s,
                  :recipient => params.delete("recipient").to_s,
                  :domain => params.delete("domain").to_s,
-                 :message_headers => params.delete("message-headers").to_s,
+                 # :message_headers => params.delete("message-headers").to_s,
                  :message_id => params.delete("Message-Id").to_s,
                  :timestamp => params.delete("timestamp").to_s,
                   :extra => params.to_s)
