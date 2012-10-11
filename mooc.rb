@@ -107,10 +107,10 @@ class MoocLog
   property :event, String
   property :recipient, String
   property :domain, String
-  property :message_headers, String
+  property :message_headers, String, :length => 2048
   property :message_id, String
   property :timestamp, String
-  property :extra, String
+  property :extra, String, :length => 2048
 
 end
 
@@ -137,17 +137,14 @@ post '/signup' do
 end
 
 post '/mooc-mailgun-log' do
-  puts "mooc-mailgun-log" + params.to_s
-  s = MoocLog.new(
+  s = MoocLog.create(
                  :event => params.delete("event").to_s,
                  :recipient => params.delete("recipient").to_s,
                  :domain => params.delete("domain").to_s,
-                 # :message_headers => params.delete("message-headers").to_s,
+                 :message_headers => params.delete("message-headers").to_s,
                  :message_id => params.delete("Message-Id").to_s,
-                 :timestamp => params.delete("timestamp").to_s)
-                 # :extra => params.to_s)
-  s.save
-  puts "mooc-mailgun-log88888 " + s.errors.inspect
+                 :timestamp => params.delete("timestamp").to_s,
+                 :extra => params.to_s)
   "400 OK"
 end
 
