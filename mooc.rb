@@ -137,14 +137,16 @@ post '/signup' do
 end
 
 post '/mooc-mailgun-log' do
-  MoocLog.create(
+  puts "mooc-mailgun-log" + params.to_s
+  s = MoocLog.create(
                  :event => params.delete("event"),
                  :recipient => params.delete("recipient"),
                  :domain => params.delete("domain"),
                  :message_headers => params.delete("message-headers"),
                  :message_id => params.delete("message_id"),
                  :timestamp => params.delete("timestamp"),
-                 :extra => params.to_s)
+                     :extra => params.to_s)
+  puts "mooc-mailgun-log" + params.to_s
   "400 OK"
 end
 
