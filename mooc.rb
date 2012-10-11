@@ -144,8 +144,8 @@ post '/mooc-mailgun-log' do
                  :domain => params.delete("domain").to_s,
                  # :message_headers => params.delete("message-headers").to_s,
                  :message_id => params.delete("Message-Id").to_s,
-                 :timestamp => params.delete("timestamp").to_s,
-                  :extra => params.to_s)
+                 :timestamp => params.delete("timestamp").to_s)
+                 # :extra => params.to_s)
   s.save
   puts "mooc-mailgun-log88888 " + s.errors.inspect
   "400 OK"
