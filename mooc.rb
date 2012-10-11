@@ -138,15 +138,16 @@ end
 
 post '/mooc-mailgun-log' do
   puts "mooc-mailgun-log" + params.to_s
-  s = MoocLog.create(
+  s = MoocLog.new(
                  :event => params.delete("event").to_s,
                  :recipient => params.delete("recipient").to_s,
                  :domain => params.delete("domain").to_s,
                  :message_headers => params.delete("message-headers").to_s,
                  :message_id => params.delete("Message-Id").to_s,
                  :timestamp => params.delete("timestamp").to_s,
-                 :extra => params.to_s)
-  puts "mooc-mailgun-log" + params.to_s
+                  :extra => params.to_s)
+  s.save
+  puts "mooc-mailgun-log88888 " + s.errors.inspect
   "400 OK"
 end
 
