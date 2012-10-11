@@ -19,7 +19,9 @@ class User
   property :expertise, String
   property :timezone, String
   property :image, String
+  property :unsubscribed, Boolean, :default => false
 
+  property :unsubscribed_at, DateTime
   property :created_at, DateTime
   property :updated_at, DateTime
 
@@ -55,18 +57,21 @@ class Group
   has n, :users
 
   property :id, Serial
+  property :timezone, String
 
   property :created_at, DateTime
   property :updated_at, DateTime
   
   after :create, :start_list
   after :save, :upsert_list_members
+  after :destroy, :delete_list
 
   def start_list
     RestClient.post("https://api:#{ENV['MAILGUN_API_KEY']}" \
                       "@api.mailgun.net/v2/lists",
                       :address => list_address,
-                      :access_level => 'members')
+                      :access_level => 'members',
+                      :description => timezone)
     RestClient.post("https://api:#{ENV['MAILGUN_API_KEY']}" \
                     "@api.mailgun.net/v2/lists/#{list_address}/members",
                     :address => "the-machine@mechanicalmooc.org",
@@ -74,6 +79,7 @@ class Group
   end
   
   def upsert_list_members
+    # puts "Adding members"
     users.each do |u|
       RestClient.post("https://api:#{ENV['MAILGUN_API_KEY']}" \
                       "@api.mailgun.net/v2/lists/#{list_address}/members",
@@ -81,16 +87,70 @@ class Group
                       :upsert => 'yes')
     end
   end
+
+  def delete_list
+    RestClient.delete("https://api:#{ENV['MAILGUN_API_KEY']}" \
+                      "@api.mailgun.net/v2/lists/#{list_address}")
+  end
   
   def list_address
     "python-#{id}@mechanicalmooc.org"
   end
 end
 
+class MoocLog
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :created_at, DateTime
+  
+  property :event, String
+  property :recipient, String
+  property :domain, String
+  property :message_headers, String
+  property :message_id, String
+  property :timestamp, String
+  property :extra, String
+
+end
+
+
 DataMapper.finalize
 DataMapper.auto_upgrade!
 
 # Begin Web server portion
+################################################################################
+
+get '/' do
+  File.read(File.join('public', 'index.html'))
+end
+
+post '/signup' do
+  User.create(
+    :email => params[:email],
+    :group_work => params[:groupRadios],
+    :learning_style => params[:styleRadios],
+    :expertise => params[:expertiseRadios],
+    :timezone => params[:timezone],
+  )
+  "Thanks for signing up, we'll email you soon."
+end
+
+post '/mooc-mailgun-log' do
+  MoocLog.create(
+                 :event => params.delete("event"),
+                 :recipient => params.delete("recipient"),
+                 :domain => params.delete("domain"),
+                 :message_headers => params.delete("message-headers"),
+                 :message_id => params.delete("message_id"),
+                 :timestamp => params.delete("timestamp"),
+                 :extra => params.to_s)
+  "400 OK"
+end
+
+
+# admin uris
+###########################################################################################
 
 # Http auth stuff 
 # Set the admin user and pass in heroku config
@@ -108,29 +168,6 @@ helpers do
     @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [ENV['ADMIN_USER'], ENV['ADMIN_PASS']]
   end
 end
-
-# Begin basic uris
-
-get '/' do
-  File.read(File.join('public', 'index.html'))
-end
-
-post '/signup' do
-  User.create(
-    :email => params[:email],
-    :group_work => params[:groupRadios],
-    :learning_style => params[:styleRadios],
-    :expertise => params[:expertiseRadios],
-    :timezone => params[:timezone],
-  )
-  "Thanks for signing up, we'll email you soon."
-end
-
-post '/parse' do
-  "400 OK"
-end
-
-# admin uris
 
 get '/admin' do
   protected!
