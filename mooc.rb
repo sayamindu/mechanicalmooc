@@ -137,12 +137,12 @@ post '/signup' do
 end
 
 post '/mooc-mailgun-log' do
-  puts "milgun-headers" + params["message-headers"].to_s
+  group_from_header_regex = /python-[0-9]{1,4}@mechanicalmooc.org/
   s = MoocLog.create(
                  :event => params.delete("event").to_s,
                  :recipient => params.delete("recipient").to_s,
                  :domain => params.delete("domain").to_s,
-                 # :message_headers => params.delete("message-headers").to_s[0..50],
+                 :message_headers => params.delete("message-headers").to_s[group_from_header_regex],
                  :message_id => params.delete("Message-Id").to_s,
                  :timestamp => params.delete("timestamp").to_s)
                  # :extra => params.to_s[0..50])
