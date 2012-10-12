@@ -137,6 +137,7 @@ post '/signup' do
 end
 
 post '/mooc-mailgun-log' do
+  puts "milgun-headers" + params["message-headers"].to_s
   s = MoocLog.create(
                  :event => params.delete("event").to_s,
                  :recipient => params.delete("recipient").to_s,
