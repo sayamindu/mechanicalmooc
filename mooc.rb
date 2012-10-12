@@ -64,6 +64,7 @@ class Group
   
   after :create, :start_list
   after :save, :upsert_list_members
+  after :update, :upsert_list_members
   after :destroy, :delete_list
 
   def start_list
