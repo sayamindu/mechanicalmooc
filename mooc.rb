@@ -20,6 +20,7 @@ class User
   property :timezone, String
   property :image, String
   property :unsubscribed, Boolean, :default => false
+  property :round, Integer, :default => 1
 
   property :unsubscribed_at, DateTime
   property :created_at, DateTime
