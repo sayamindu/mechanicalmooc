@@ -35,12 +35,16 @@ class User
   end
   
   def send_welcome_email
+    body_html = File.read('emails/signup-confirmation.html')
+    body_text = File.read('emails/signup-confirmation.txt')
+    subject = "Thanks for signing up"
     RestClient.post "https://api:#{ENV['MAILGUN_API_KEY']}"\
     "@api.mailgun.net/v2/mechanicalmooc.org/messages",
     :from => "The Machine <the-machine@mechanicalmooc.org>",
     :to => email,
-    :subject => "Hello",
-    :text => "Thanks for signing up"
+    :subject => subject,
+    :text => body_text,
+    :html => body_html
   end
 
   def add_user_to_all_list
