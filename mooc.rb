@@ -138,6 +138,7 @@ post '/signup' do
     :learning_style => params[:styleRadios],
     :expertise => params[:expertiseRadios],
     :timezone => params[:timezone],
+    :round => 2
   )
   "Thanks for signing up, we'll email you soon."
 end
