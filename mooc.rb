@@ -4,7 +4,6 @@ require 'dm-timestamps'
 require 'dm-validations'
 require 'dm-migrations'
 require 'rest_client'
-require 'maruku'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
 
