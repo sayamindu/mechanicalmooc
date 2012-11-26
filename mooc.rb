@@ -178,7 +178,7 @@ helpers do
 end
 
 get '/admin' do
-  # protected!
+  protected!
   File.read(File.join('public', 'admin.html'))
 end
 
