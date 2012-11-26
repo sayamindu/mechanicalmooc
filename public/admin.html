@@ -13,6 +13,7 @@
     <link href="../css/font-awesome-ie7.css" rel="stylesheet">
     <link href="../css/customizations.css" rel="stylesheet">
     <link href="../css/jquery.tagit.css" rel="stylesheet">
+    <link href="../css/bootstrap-wysihtml5.css" rel="stylesheet">
     <link href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -53,38 +54,48 @@
       </div>
       <div class="row">
         <div class="span12">
-          <form id="emailForm" class="form well">
-          <label>
-          Sequence
-          </label>
-          <label class="radio">
-  <input type="radio" name="sequence" id="seqeunce-radio1" value="seqeunce1" checked>
-    Sequence 1
-</label>
-<label class="radio">
-  <input type="radio" name="sequence" id="seqeunce-radio2" value="seqeunce2">
-   Sequence 2
-</label>
-          <label>
-            Subject
-          </label>
-              <input id="subject" name="subject" class="input-xxlarge" type="text" placeholder="Subject..."/>
+          <form id="emailForm" class="form well" action="./admin/send-email" method="post">
+<!--           <label> -->
+<!--           Sequence -->
+<!--           </label> -->
+<!--           <label class="radio"> -->
+<!--   <input type="radio" name="sequence" id="seqeunce-radio1" value="seqeunce1" checked> -->
+<!--     Sequence 1 -->
+<!-- </label> -->
+<!-- <label class="radio"> -->
+<!--   <input type="radio" name="sequence" id="seqeunce-radio2" value="seqeunce2"> -->
+<!--    Sequence 2 -->
+<!-- </label> -->
+          <div class="btn-group" data-toggle-name="sequence" data-toggle="buttons-radio" >
+            <button type="button" value="sequence1" class="btn btn-primary" data-toggle="button">Sequence 1</button>
+            <button type="button" value="sequence2" class="btn btn-primary" data-toggle="button">Sequence 2</button>
+          </div>
+          <input type="hidden" name="sequence" value="0" /><br /><br />
           <label>
             Tags<br />
            <small>Available tags include: sequence_2, course, intro, week_*, encourage, assignment</small>
 
           </label>
-              <input id="tags" name="tags" type="text"/>
+          <input id="tags" name="tags" type="text"/>
+          <label>
+            Subject
+          </label>
+          <input id="subject" name="subject" class="full-width" type="text" placeholder="Subject..."/>
 
           <label>
             Message Body
           </label>
-              <textarea id="body-text" name="body-text" class="input-xxlarge"
-      type="text" rows="20" placeholder="Hello MooCers..."></textarea>
+          <textarea id="body_text" name="body_text" class="full-width"
+            type="text" rows="20" placeholder="Hello MooCers..."></textarea>
+          
 
             <div class="form-actions">
-                <button id="finish" type="submit" class="btn btn-success"><i class="icon-ok"></i> Send</button>
-              </div>
+                Send a test email to <input id="test_email"name="test_email" type="text"/>
+
+                <button id="send_preview" class="btn btn-success"><i class="icon-ok"></i> Send Preview</button>
+<br /> <br/>
+                <button id="finish" type="submit" class="btn btn-large btn-warning"><i class="icon-ok"></i> Send Live!</button>
+              </div>              
           </form>
         </div>
       </div>
@@ -97,32 +108,55 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
     <script src="../js/tag-it.js"></script>
+    <script src="../js/wysihtml5.min.js"></script>
+    <script src="../js/bootstrap-wysihtml5.min.js"></script>
 
     
     <script src="../js/bootstrap.min.js"></script>
     <script>
       $(document).ready(function () {
 
-        $("#emailForm").validate({
-          debug: true,
-          rules: {
-            subject: { required: true }
-          },
-          errorClass: "error",
-          highlight: function(element, errorClass) {
-            $("#emailForm .control-group").addClass(errorClass);
-          },
-          unhighlight: function(element, errorClass, validClass) {
-            $("#emailForm .control-group").removeClass(errorClass);
-          },
-          errorPlacement: function(error, element){
-            $("#emailForm .control-group").prepend(error);
-          },
-          submitHandler: function(form) {
-          }
-        });
+        <!-- $("#emailForm").validate({ -->
+        <!--   debug: true, -->
+        <!--   rules: { -->
+        <!--     subject: { required: true } -->
+        <!--   }, -->
+        <!--   errorClass: "error", -->
+        <!--   highlight: function(element, errorClass) { -->
+        <!--     $("#emailForm .control-group").addClass(errorClass); -->
+        <!--   }, -->
+        <!--   unhighlight: function(element, errorClass, validClass) { -->
+        <!--     $("#emailForm .control-group").removeClass(errorClass); -->
+        <!--   }, -->
+        <!--   errorPlacement: function(error, element){ -->
+        <!--     $("#emailForm .control-group").prepend(error); -->
+        <!--   }, -->
+        <!--   submitHandler: function(form) { -->
+        <!--     return true; -->
+        <!--   } -->
+        <!-- }); -->
         $("#tags").tagit();
-        $("#tags").hide();    
+        $("#tags").hide();
+        $("#body_text").wysihtml5();
+        $('div.btn-group[data-toggle-name]').each(function(){
+          var group   = $(this);
+          var form    = group.parents('form').eq(0);
+          var name    = group.attr('data-toggle-name');
+          var hidden  = $('input[name="' + name + '"]', form);
+          $('button', group).each(function(){
+            var button = $(this);
+            button.live('click', function(){
+                hidden.val($(this).val());
+            });
+            if(button.val() == hidden.val()) {
+              button.addClass('active');
+            }
+          });
+        });
+      });
+      $('#send_preview').live('click', function(){
+        $.post("./admin/send-test-email", $("#emailForm").serialize());
+        return false;
       });
     </script>
     

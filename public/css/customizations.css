@@ -6,6 +6,10 @@
   width: 64px;
 }
 
+.full-width{
+  width: 99%;
+}
+
 /* Progress Bar */
 
 .progress-step .step-full,

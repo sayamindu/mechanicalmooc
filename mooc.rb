@@ -4,6 +4,7 @@ require 'dm-timestamps'
 require 'dm-validations'
 require 'dm-migrations'
 require 'rest_client'
+require 'maruku'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
 
@@ -178,22 +179,40 @@ helpers do
 end
 
 get '/admin' do
-  protected!
+  # protected!
   File.read(File.join('public', 'admin.html'))
 end
 
 post '/admin/send-email' do
   protected!
-  puts params[:from-email]
-  puts params[:to-email]
+  puts "REAL"
+  puts params[:sequence]
   puts params[:subject]
-  puts params[:body-text]
-
+  puts params[:tags]
+  puts params[:body_text]
   # RestClient.post("https://api:#{ENV['MAILGUN_API_KEY']}"\
   #                 "@api.mailgun.net/v2/mechanicalmooc.org/messages",
   #                 :from => "The Machine <the-machine@mechanicalmooc.org>",
   #                 :to => email,
   #                 :subject => "Hello",
   #                 :text => "Thanks for signing up")
+end
+
+post '/admin/send-test-email' do
+  protected!
+  puts "TEST"
+  puts params[:sequence]
+  puts params[:subject]
+  puts params[:tags]
+  puts params[:body_text]
+  html_body = "<html><body>THIS IS A TEST EMAIL!!! <hr />"
+  html_body += params[:body_text] + "</body></html>"
+  puts html_body
+  RestClient.post("https://api:#{ENV['MAILGUN_API_KEY']}"\
+                  "@api.mailgun.net/v2/mechanicalmooc.org/messages",
+                  :from => "The Machine <the-machine@mechanicalmooc.org>",
+                  :to => params[:test_email],
+                  :subject => params[:subject],
+                  :html => html_body)
 end
 
