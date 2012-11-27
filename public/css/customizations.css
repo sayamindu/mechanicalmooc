@@ -10,6 +10,12 @@
   width: 99%;
 }
 
+input.ui-widget-content, input.ui-widget-content:focus{
+  box-shadow: none;
+  webkit-box-shadow: none;
+  moz-box-shadow: none;
+}
+
 /* Progress Bar */
 
 .progress-step .step-full,
