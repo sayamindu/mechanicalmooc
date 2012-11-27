@@ -55,20 +55,9 @@
       <div class="row">
         <div class="span12">
           <form id="emailForm" class="form well" action="./admin/send-email" method="post">
-<!--           <label> -->
-<!--           Sequence -->
-<!--           </label> -->
-<!--           <label class="radio"> -->
-<!--   <input type="radio" name="sequence" id="seqeunce-radio1" value="seqeunce1" checked> -->
-<!--     Sequence 1 -->
-<!-- </label> -->
-<!-- <label class="radio"> -->
-<!--   <input type="radio" name="sequence" id="seqeunce-radio2" value="seqeunce2"> -->
-<!--    Sequence 2 -->
-<!-- </label> -->
           <div class="btn-group" data-toggle-name="sequence" data-toggle="buttons-radio" >
-            <button type="button" value="sequence1" class="btn btn-primary" data-toggle="button">Sequence 1</button>
-            <button type="button" value="sequence2" class="btn btn-primary" data-toggle="button">Sequence 2</button>
+            <button type="button" value="sequence_1" class="btn btn-primary" data-toggle="button">Sequence 1</button>
+            <button type="button" value="sequence_2" class="btn btn-primary" data-toggle="button">Sequence 2</button>
           </div>
           <input type="hidden" name="sequence" value="0" /><br /><br />
           <label>
@@ -87,14 +76,22 @@
           </label>
           <textarea id="body_text" name="body_text" class="full-width"
             type="text" rows="20" placeholder="Hello MooCers..."></textarea>
-          
+
+          <label class="checkbox">
+            <input type="checkbox" name="include_footer" checked="checked"> Include the sequence footer?
+          </label>
 
             <div class="form-actions">
-                Send a test email to <input id="test_email"name="test_email" type="text"/>
+            <!-- This works better in the newer bootstrap but it breaks too much other stuff -->
+            <div class="input-prepend input-append">
+                <span class="add-on">Send a test email to</span>
+                <input id="test_email" class="span3" name="test_email" type="text"/>
+                <button id="send_preview" class="btn btn-success disabled"><i class="icon-ok"></i> Send Preview</button>
+            </div>
 
-                <button id="send_preview" class="btn btn-success"><i class="icon-ok"></i> Send Preview</button>
 <br /> <br/>
-                <button id="finish" type="submit" class="btn btn-large btn-warning"><i class="icon-ok"></i> Send Live!</button>
+                <button id="finish" type="submit" class="btn btn-large
+                btn-warning disabled"><i class="icon-ban-circle"></i> No Sequence Selected!</button>
               </div>              
           </form>
         </div>
@@ -135,9 +132,15 @@
         <!--     return true; -->
         <!--   } -->
         <!-- }); -->
-        $("#tags").tagit();
+        $("#tags").tagit({
+          showAutocompleteOnFocus: true,
+          availableTags: ["intro", "course", "sequence_1", "week_*", "sequence_2", "assignment", "encourage"]
+        });
         $("#tags").hide();
-        $("#body_text").wysihtml5();
+        $("#body_text").wysihtml5({
+          "html": true,
+          "color": true
+        });
         $('div.btn-group[data-toggle-name]').each(function(){
           var group   = $(this);
           var form    = group.parents('form').eq(0);
@@ -147,6 +150,9 @@
             var button = $(this);
             button.live('click', function(){
                 hidden.val($(this).val());
+                $("#finish").html('<i class="icon-ok"></i>  Send Live to ' + $(this).text() + '!');
+                $("#finish").removeClass("disabled");
+                $("#send_preview").removeClass("disabled");
             });
             if(button.val() == hidden.val()) {
               button.addClass('active');

@@ -1,9 +1,13 @@
 require 'sinatra'
+require 'sinatra/contrib'
+require 'thin'
 require 'dm-core'
 require 'dm-timestamps'
 require 'dm-validations'
 require 'dm-migrations'
 require 'rest_client'
+$LOAD_PATH << '.'
+require 'seq-email'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
 
@@ -178,40 +182,46 @@ helpers do
 end
 
 get '/admin' do
-  protected!
+  # protected!
   File.read(File.join('public', 'admin.html'))
 end
 
 post '/admin/send-email' do
-  protected!
-  puts "REAL"
-  puts params[:sequence]
-  puts params[:subject]
-  puts params[:tags]
-  puts params[:body_text]
-  # RestClient.post("https://api:#{ENV['MAILGUN_API_KEY']}"\
-  #                 "@api.mailgun.net/v2/mechanicalmooc.org/messages",
-  #                 :from => "The Machine <the-machine@mechanicalmooc.org>",
-  #                 :to => email,
-  #                 :subject => "Hello",
-  #                 :text => "Thanks for signing up")
+  # protected!
+
+  html_body = '<html><body style="margin: 0; font-family: sense, helvetica, sans-serif;">'
+  html_body += params[:body_text]
+  if params[:include_footer]
+    html_body += File.read(File.join('email-footers', "#{params[:sequence]}.html"))
+  end
+  html_body += '</body></html>'
+
+  stream do |out|
+    se = SequenceEmail.new(out)
+    se.sequence = params[:sequence]
+    se.subject = params[:subject]
+    se.body = html_body
+    se.tags += params[:tags].split(",")
+    se.send!
+  end  
 end
 
 post '/admin/send-test-email' do
-  protected!
-  puts "TEST"
-  puts params[:sequence]
-  puts params[:subject]
-  puts params[:tags]
-  puts params[:body_text]
-  html_body = "<html><body>THIS IS A TEST EMAIL!!! <hr />"
-  html_body += params[:body_text] + "</body></html>"
-  puts html_body
-  RestClient.post("https://api:#{ENV['MAILGUN_API_KEY']}"\
-                  "@api.mailgun.net/v2/mechanicalmooc.org/messages",
-                  :from => "The Machine <the-machine@mechanicalmooc.org>",
-                  :to => params[:test_email],
-                  :subject => params[:subject],
-                  :html => html_body)
+  # protected!
+  # content_type "text/event-stream"
+  html_body = '<html><body style="margin: 0; font-family: sense, helvetica, sans-serif;">'
+  html_body += 'THIS IS A TEST EMAIL!!! <hr />'
+  html_body += params[:body_text]
+  if params[:include_footer]
+    html_body += File.read(File.join('email-footers', "#{params[:sequence]}.html"))
+  end
+  html_body += '</body></html>'
+  
+  se = SequenceEmail.new
+  se.subject = params[:subject]
+  se.body = html_body
+  se.tags << "test"
+  se.send_test_email_to(params[:test_email])
+  
 end
 

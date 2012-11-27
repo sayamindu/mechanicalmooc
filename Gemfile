@@ -1,10 +1,15 @@
 source 'http://rubygems.org'
 gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'thin'
 gem 'dm-core'
 gem 'dm-timestamps'
 gem 'dm-validations'
 gem 'dm-migrations'
 gem 'rest-client'
+gem 'multimap'
+gem 'activemodel'
+gem 'html2markdown'
 
 group :production do
     gem "pg"
