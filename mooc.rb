@@ -184,12 +184,12 @@ end
 
 
 get '/admin' do
-  # protected!
+  protected!
   File.read(File.join('public', 'admin.html'))
 end
 
 post '/admin/send-email' do
-  # protected!
+  protected!
   html_body = '<html><body style="margin: 0; font-family: sense, helvetica, sans-serif;">'
   html_body += params[:body_text]
   if params[:include_footer]
@@ -208,7 +208,7 @@ post '/admin/send-email' do
 end
 
 post '/admin/send-test-email' do
-  # protected!
+  protected!
   html_body = '<html><body style="margin: 0; font-family: sense, helvetica, sans-serif;">'
   html_body += 'THIS IS A TEST EMAIL!!! <hr />'
   html_body += params[:body_text]
