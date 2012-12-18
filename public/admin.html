@@ -58,11 +58,14 @@
           <div class="btn-group" data-toggle-name="sequence" data-toggle="buttons-radio" >
             <button type="button" value="sequence_1" class="btn btn-primary" data-toggle="button">Sequence 1</button>
             <button type="button" value="sequence_2" class="btn btn-primary" data-toggle="button">Sequence 2</button>
+            <button type="button" value="sequence_3" class="btn btn-primary" data-toggle="button">Sequence 3</button>
           </div>
           <input type="hidden" name="sequence" value="0" /><br /><br />
+          <div id="user-count" class="alert alert-info" style="display:none;">
+          </div>
           <label>
             Tags<br />
-           <small>Available tags include: sequence_2, course, intro, week_*, encourage, assignment</small>
+           <small>Available tags include: sequence_*, course, intro, week_*, encourage, assignment</small>
 
           </label>
           <input id="tags" name="tags" type="text"/>
@@ -134,7 +137,7 @@
         <!-- }); -->
         $("#tags").tagit({
           showAutocompleteOnFocus: true,
-          availableTags: ["intro", "course", "sequence_1", "week_*", "sequence_2", "assignment", "encourage"]
+          availableTags: ["intro", "course", "sequence_1", "week_*", "sequence_2", "sequence_3", "assignment", "encourage"]
         });
         $("#tags").hide();
         $("#body_text").wysihtml5({
@@ -150,9 +153,14 @@
             var button = $(this);
             button.live('click', function(){
                 hidden.val($(this).val());
-                $("#finish").html('<i class="icon-ok"></i>  Send Live to ' + $(this).text() + '!');
+                name = $(this).text();
+                $("#finish").html('<i class="icon-ok"></i>  Send Live to ' + name + '!');
                 $("#finish").removeClass("disabled");
                 $("#send_preview").removeClass("disabled");
+                $.get("./admin/user-count?round=" + name, function(data) {
+                   $("#user-count").text("There are currently " + data + " users in " + name);
+                   $("#user-count").show();
+                });
             });
             if(button.val() == hidden.val()) {
               button.addClass('active');
