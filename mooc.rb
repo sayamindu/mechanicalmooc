@@ -227,6 +227,6 @@ end
 
 get '/admin/user-count' do
   content_type :json
-  round = params[:round].match(/\d+$/)[0]
+  round = params[:round].match(/\d+/)[0]
   User.all(:round => round).count.to_json
 end

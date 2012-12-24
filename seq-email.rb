@@ -33,10 +33,13 @@ class SequenceEmail
       sequence2_users = User.all :group_work => false, :round => 2
       send_email_to_users( sequence2_users.collect{|u| u.email} , "br67o")
       send_email_to_groups( 171..187 )
-    elsif @sequence == "sequence_3"
-      sequence3_users = User.all :group_work => false, :round => 3
+    elsif @sequence == "sequence_3_all"
+      sequence3_users = User.all :round => 3
       send_email_to_users( sequence3_users.collect{|u| u.email} , "brmcg")
       # send_email_to_groups( 188.. )
+    elsif @sequence == "sequence_3_groups"
+      sequence3_users = User.all :group_work => true, :round => 3
+      send_email_to_users( sequence3_users.collect{|u| u.email} , "brmcg")
     else
       @output_stream.puts "Not a valid sequence"
       return false
