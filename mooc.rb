@@ -8,7 +8,8 @@ require 'dm-validations'
 require 'dm-migrations'
 require 'rest_client'
 $LOAD_PATH << '.'
-require 'seq-email'
+# require 'seq-email'
+# require 'group-confirm'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
 
@@ -26,6 +27,7 @@ class User
   property :image, String
   property :unsubscribed, Boolean, :default => false
   property :round, Integer, :default => 1
+  property :group_confirmation, Boolean, :default => false
 
   property :unsubscribed_at, DateTime
   property :created_at, DateTime
@@ -161,6 +163,11 @@ post '/mooc-mailgun-log' do
   "400 OK"
 end
 
+get '/confirm' do
+  GroupConfirm.confirm(params[:email], params[:auth_token])
+  File.read(File.join('public', 'confirmed.html'))
+end
+
 
 # admin uris
 ###########################################################################################
@@ -221,7 +228,7 @@ post '/admin/send-test-email' do
   se.subject = params[:subject]
   se.body = html_body
   se.tags << "test"
-  se.send_test_email_to(params[:test_email])
+  se.send_email_to(params[:test_email])
   
 end
 

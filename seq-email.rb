@@ -7,7 +7,7 @@ require 'html2markdown'
 $LOAD_PATH << '.'
 require 'mooc'
 
-
+ENV['MAILGUN_API_KEY'] = "key-4kkoysznhb93d1hn8r37s661fgrud-66"
 RestClient.log = 'restclient.log'
 
 
@@ -46,7 +46,7 @@ class SequenceEmail
     end
   end
 
-  def send_test_email_to(email_address)
+  def send_email_to(email_address)
     data = Multimap.new
     data[:from] = "The Machine <the-machine@mechanicalmooc.org>"
     data[:subject] = @subject
