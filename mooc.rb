@@ -8,8 +8,8 @@ require 'dm-validations'
 require 'dm-migrations'
 require 'rest_client'
 $LOAD_PATH << '.'
-# require 'seq-email'
-# require 'group-confirm'
+require 'seq-email'
+require 'group-confirm'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
 
