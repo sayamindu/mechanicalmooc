@@ -17,7 +17,7 @@ module GroupConfirm
     link = link_template.sub('%EMAIL%', email).sub('%AUTH_TOKEN%', email_auth(email))
 
     se = SequenceEmail.new
-    se.subject = "Please confirm your group - Important!"
+    se.subject = "Reminder - Jan 9th group cutoff date"
     se.body = body.sub('%CONFIRM_LINK%', link)
     se.tags << "group-confirm-test"
     se.send_email_to(email)
