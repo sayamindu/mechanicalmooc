@@ -12,7 +12,7 @@ module GroupConfirm
   end
 
   def self.send_confirm_email(email)
-    body = File.read('./emails/group-confirm.html')
+    body = File.read('./emails/group-confirm2.html')
     link_template = "http://mechanicalmooc.org/confirm?email=%EMAIL%&auth_token=%AUTH_TOKEN%"
     link = link_template.sub('%EMAIL%', email).sub('%AUTH_TOKEN%', email_auth(email))
 
