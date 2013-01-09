@@ -12,12 +12,12 @@ module GroupConfirm
   end
 
   def self.send_confirm_email(email)
-    body = File.read('./emails/group-confirm2.html')
+    body = File.read('./emails/group-confirm3.html')
     link_template = "http://mechanicalmooc.org/confirm?email=%EMAIL%&auth_token=%AUTH_TOKEN%"
     link = link_template.sub('%EMAIL%', email).sub('%AUTH_TOKEN%', email_auth(email))
 
     se = SequenceEmail.new
-    se.subject = "Reminder - Jan 9th group cutoff date"
+    se.subject = "Last chance to confirm your group!"
     se.body = body.sub('%CONFIRM_LINK%', link)
     se.tags << "group-confirm-test"
     se.send_email_to(email)
