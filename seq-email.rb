@@ -7,9 +7,6 @@ require 'html2markdown'
 $LOAD_PATH << '.'
 require 'mooc'
 
-ENV['MAILGUN_API_KEY'] = "key-4kkoysznhb93d1hn8r37s661fgrud-66"
-RestClient.log = 'restclient.log'
-
 
 class SequenceEmail
   include ActiveModel::Validations
@@ -34,12 +31,11 @@ class SequenceEmail
       send_email_to_users( sequence2_users.collect{|u| u.email} , "br67o")
       send_email_to_groups( 171..187 )
     elsif @sequence == "sequence_3_all"
-      sequence3_users = User.all :round => 3
-      send_email_to_users( sequence3_users.collect{|u| u.email} , "brmcg")
-      # send_email_to_groups( 188.. )
+      sequence3_users = User.all :round => 3, :group_work => false, :group_confirmation => false
+      send_email_to_users( sequence3_users.collect{|u| u.email} , "brmcg")      
+      send_email_to_groups( 188..209 )
     elsif @sequence == "sequence_3_groups"
-      sequence3_users = User.all :group_work => true, :round => 3
-      send_email_to_users( sequence3_users.collect{|u| u.email} , "brmcg")
+      send_email_to_groups( 188..209 )
     else
       @output_stream.puts "Not a valid sequence"
       return false
