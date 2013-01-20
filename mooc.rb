@@ -20,11 +20,15 @@ class User
 
   property :id, Serial
   property :email, String, :required => true
-  property :group_work, Boolean, :default => true
-  property :learning_style, String
-  property :expertise, String
+  property :flavor, String
+  property :team, String
+  property :experience, String
+  property :real_student, Boolean, :default => false
   property :timezone, String
-  property :image, String
+  property :group_work, String
+  property :group_code, String, :default => ""
+  property :expectations, String
+  
   property :unsubscribed, Boolean, :default => false
   property :round, Integer, :default => 1
   property :group_confirmation, Boolean, :default => false
@@ -70,6 +74,7 @@ class Group
 
   property :id, Serial
   property :timezone, String
+  property :friend_based, Boolean, :default => false
 
   property :created_at, DateTime
   property :updated_at, DateTime
@@ -141,10 +146,14 @@ end
 post '/signup' do
   User.create(
     :email => params[:email],
-    :group_work => params[:groupRadios],
-    :learning_style => params[:styleRadios],
-    :expertise => params[:expertiseRadios],
+    :flavor => params[:flavorRadios],
+    :team => params[:teamRadios],
+    :experience => params[:experienceRadios],
+    :real_student => params[:studentCheckbox],
     :timezone => params[:timezone],
+    :group_work => params[:groupRadios],
+    :group_code => params[:groupcode],
+    :expectations => params[:expectations],
     :round => 3
   )
   "Thanks for signing up, we'll email you soon."

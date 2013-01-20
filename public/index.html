@@ -98,55 +98,68 @@
           <form id="infoForm" class="form-horizontal">
             <input id="hiddenEmailField" type="hidden" name="email"></hidden>
             <fieldset>
+            
               <div class="control-group">
-                <label class="control-label"><i class="icon-group"></i> Group Work</label>
+                <label class="control-label"><i class="icon-group"></i> Your Flavor</label>
                 <div class="controls">
-                  <p class="help-block">We'll match you up with a band of likeminded folks. You'll get extra support, help others when they get stuck, and make smart friends.</p>
                   <label class="radio">
-                    <input type="radio" name="groupRadios" id="groupRadios1" value="true" checked>
-                    Match me up <em>with other folks</em>.
+                    <input type="radio" name="flavorRadios" id="flavorRadios1" value="build">
+                    I want to design and create. I’m here to build. 
                   </label>
                   <label class="radio">
-                    <input type="radio" name="groupRadios" id="groupRadios2" value="false">
-                    I'm going to do this course <em>on my own</em>. Thanks though!
+                    <input type="radio" name="flavorRadios" id="flavorRadios2" value="understand">
+                     I want to read, think & discuss with others. I’m here to understand.
                   </label>
                 </div>
               </div>
+              
               <div class="control-group">
-                <label class="control-label"><i class="icon-book"></i> Learning Style</label>
+                <label class="control-label"><i class="icon-book"></i> Your Team</label>
                 <div class="controls">
-                  <p class="help-block">When learning something new, what's your first instinct?</p>
+                  <p class="help-block">We know you are more complex than this, but if you had to chose one, which is it going to be? (In fact, you have to choose one)</p>
                   <label class="radio">
-                    <input type="radio" name="styleRadios" id="styleRadios1" value="try">
-                    I try it out.
+                    <input type="radio" name="teamRadios" id="teamRadios1" value="education">
+                    I come from a land called learning &amp; education
                   </label>
                   <label class="radio">
-                    <input type="radio" name="styleRadios" id="styleRadios2" value="think">
-                    I think it through.
+                    <input type="radio" name="teamRadios" id="teamRadios2" value="computers">
+                    Some of my best friends are computers
                   </label>
                   <label class="radio">
-                    <input type="radio" name="styleRadios" id="styleRadios3" value="discuss">
-                    I discuss it with someone else.
+                    <input type="radio" name="teamRadios" id="teamRadios3" value="other">
+                    I’m neither. I’m different.
                   </label>
                 </div>
               </div>
+              
               <div class="control-group">
-                <label class="control-label"><i class="icon-cogs"></i> Your Experience</label>
+                <label class="control-label"><i class="icon-cogs"></i>  Experience</label>
                 <div class="controls">
                   <label class="radio">
-                    <input type="radio" name="expertiseRadios" id="expertiseRadios1" value="try">
-                    I have experience in education.
+                    <input type="radio" name="experienceRadios" id="experienceRadios1" value="level1">
+                    Creative what? Learning? Sure, that sounds interesting.
                   </label>
                   <label class="radio">
-                    <input type="radio" name="expertiseRadios" id="expertiseRadios2" value="think">
-                    I have experience in technology.
+                    <input type="radio" name="experienceRadios" id="experienceRadios2" value="level2">
+                     I’ve got an idea what this course is about.
                   </label>
                   <label class="radio">
-                    <input type="radio" name="expertiseRadios" id="expertiseRadios3" value="discuss">
-                    I have experience in both technology and education.
+                    <input type="radio" name="experienceRadios" id="experienceRadios3" value="level3">
+                     I’m an expert (also check this, if you are Mitch Resnick).
                   </label>
-                </div>
+                </div>  
               </div>
+
+              <div class="control-group">
+                <label class="control-label"><i class="icon-cogs"></i> Real Student</label>
+                <div class="controls">
+                  <label class="checkbox">
+                   <input type="checkbox" name="studentCheckbox" value=false>
+                    I am currently studying towards a college or university degree.
+                  </label>
+                </div>  
+              </div>
+              
               <div class="control-group">
                 <label class="control-label" for="timezone"><i class="icon-time"></i> Timezone</label>
                 <div class="controls">
@@ -226,24 +239,31 @@
                   <p id="timezoneHelp" class="help-block"></p>
                 </div>
               </div>
-              <!--div class="control-group">
-                <label class="control-label"><i class="icon-question-sign"></i> What is the Mechanical MOOC?</label>
-                <div class="controls">
-                  <label class="radio inline">
-                    <input type="radio" name="imageRadios" id="imageRadios1" value="dinosaur">
-                    <img src="http://placehold.it/75x75" alt="">
+              
+              <div class="control-group">
+                <label class="control-label"><i class="icon-question-sign"></i>  Group Work</label>
+                <div class="controls">                
+                  <p class="help-block">We'll match you up with a band of likeminded folks. You'll get extra support, help others when they get stuck, and make smart friends.</p>
+
+                  <label class="radio">
+                    <input type="radio" name="groupRadios" id="groupRadios1" value="random">
+                     I can’t wait. That’s awesome!
                   </label>
                   <label class="radio inline">
-                    <input type="radio" name="imageRadios" id="imageRadios2" value="robot">
-                    <img src="http://placehold.it/75x75" alt="">
+                    <input type="radio" name="groupRadios" id="groupRadios2" value="friend">
+                    I’ve got an invite code to my friends’ group. Group me with these fools.<input type="text" name="groupcode" placeholder="Invite code">
                   </label>
-                  <label class="radio inline">
-                    <input type="radio" name="imageRadios" id="imageRadios3" value="xfiles">
-                    <img src="http://placehold.it/75x75" alt="">
-                  </label>
-                  <p class="help-block">This is some additional text explaining this question.</p>
                 </div>
-              </div-->
+              </div>
+              
+              <div class="control-group">
+                <label class="control-label"><i class="icon-question-sign"></i>  Optional</label>
+                <div class="controls">
+                  <p class="help-block">Tell us what you hope to get out of taking the course.</p>
+                    <textarea rows="3" name="expectations"></textarea>
+                </div>
+              </div>
+                
               <div class="form-actions">
                 <button id="finish" type="submit" class="btn btn-success"><i class="icon-ok"></i> Finish</button>
               </div>
@@ -326,11 +346,11 @@
         $("#infoForm").validate({
           debug: true,
           rules: {
-            groupRadios: "required",
-            styleRadios: "required",
-            expertiseRadios: "required",
+            flavorRadios: "required",
+            teamRadios: "required",
+            experienceRadios: "required",
             timezone: "required",
-            imageRadios: "required"
+            groupRadios: "required"
           },
           errorClass: "error",
           highlight: function(element, errorClass) {
