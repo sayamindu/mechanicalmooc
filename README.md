@@ -1,6 +1,8 @@
-# Mecahnical MOOC
+# Learning Creative Learning / Mechanical MOOC
 
-The mechanical mooc is P2PU's open source implementation of the - hugely popular - MOOCs. Currently it contains:
+Learning Creative Learning is a course offered at the MIT Media Lab. This is the first time we are providing an online version, using the Mechanical MOOC and G+ communities.
+
+The Mechanical MOOC is P2PU's light-weight open source platform for orchestrating large-scale online courses. Currently it contains:
 
  * A simple webserver and splash page
  * A form to get people signed up for a course
