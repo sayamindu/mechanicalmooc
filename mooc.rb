@@ -25,7 +25,6 @@ class User
   property :experience, String
   property :real_student, Boolean, :default => false
   property :timezone, String
-  property :group_work, String
   property :group_code, String, :default => ""
   property :expectations, String
   
@@ -48,6 +47,13 @@ class User
   def send_welcome_email
     body_html = File.read('emails/signup-confirmation.html')
     body_text = File.read('emails/signup-confirmation.txt')
+    if group_code.length == 0
+      body_html["{%INVITE_CODE%}"] = id.to_s()
+      body_text["{%INVITE_CODE%}"] = id.to_s()
+    else
+      body_html["If you want to invite your friends to join your course-group, please ask them to join via <a href=\"http://learn.media.mit.edu\">learn.media.mit.edu</a> with the invite code of {%INVITE_CODE%}."] = ""
+      body_text["If you want to invite your friends to join your course-group, please ask them to join via http://learn.media.mit.edu with the invite code of {%INVITE_CODE%}."] = ""
+    end
     subject = "Thanks for signing up"
     RestClient.post "https://api:#{ENV['MAILGUN_API_KEY']}"\
     "@api.mailgun.net/v2/mas712.mailgun.org/messages",
@@ -151,7 +157,6 @@ post '/signup' do
     :experience => params[:experienceRadios],
     :real_student => params[:studentCheckbox],
     :timezone => params[:timezone],
-    :group_work => params[:groupRadios],
     :group_code => params[:groupcode],
     :expectations => params[:expectations],
     :round => 3
