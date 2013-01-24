@@ -65,12 +65,12 @@
     <div id="step1" class="container">
       <h1><small>The MIT Media Lab & P2PU Present...</small></h1>
       <div style="padding-left:20px;position:relative; bottom: -80px;">
-          <h1 style="background-image: url('../img/header-bg.png'); background-repeat:no-repeat;color:white;">Learning Creative Learning</h1>
+          <h1 style="background-image: url('../img/header-bg.png'); background-repeat:no-repeat;color:white;position:relative;z-index:100;">Learning Creative Learning</h1>
       </div>
-      <div class="row" style="position: relative; top: -40px; z-index:-1;">
+      <div class="row" style="position: relative; top: -40px;">
         <div class="span12" style="background-image: url(../img/banner.png); height: 371px; width: 1170px; border: 0px;">
           <div style="width=100%; padding-left:590px;padding-top:20px;">
-              <iframe width="560" height="315" src="http://www.youtube.com/embed/QrsIICQ1eg8?rel=0" frameborder="0" allowfullscreen></iframe>
+              <iframe width="560" height="315" src="http://www.youtube.com/embed/QrsIICQ1eg8?rel=0" frameborder="0" wmode="transparent" allowfullscreen></iframe>
           </div>
           <!-- COMMENTED OUT <img src="/img/banner.png" alt="Learning Creative Learning banner"> --> 
         </div>
@@ -332,8 +332,6 @@
           debug: true,
           rules: {
             flavorRadios: "required",
-            teamRadios: "required",
-            experienceRadios: "required",
             timezone: "required",
           },
           errorClass: "error",

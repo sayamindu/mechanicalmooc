@@ -21,8 +21,6 @@ class User
   property :id, Serial
   property :email, String, :required => true
   property :flavor, String
-  property :team, String
-  property :experience, String
   property :real_student, Boolean, :default => false
   property :timezone, String
   property :group_code, String, :default => ""
@@ -153,8 +151,6 @@ post '/signup' do
   User.create(
     :email => params[:email],
     :flavor => params[:flavorRadios],
-    :team => params[:teamRadios],
-    :experience => params[:experienceRadios],
     :real_student => params[:studentCheckbox],
     :timezone => params[:timezone],
     :group_code => params[:groupcode],
