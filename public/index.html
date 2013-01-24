@@ -79,8 +79,8 @@
         <div class="span12">
           <form id="emailForm" class="well">
                 <div class="">
-                  <h3><i class="icon-calendar"></i> The course starts on February 11th</h3>
-                  <h4><small>but you can sign up now</small></h4>
+                  <h3><i class="icon-calendar"></i> The course starts on February 11th (but you can sign up now!)</h3>
+                  <h4><small>It's quick and easy.</h4>
       </div>
 
             <div class="control-group">
@@ -100,14 +100,14 @@
         </div>
         <div class="span4">
           <h2><i class="icon-bolt"></i> A Big Experiment</h2>
-          <p>This is a big experiment. Things will break. We don't have all the answers. Sometimes we rely on you to make it work. But we'll try our very darndest to make sure you have a good time. Think of Learning Creative Learning as your party, without having to wash the dishes in the morning.</p>
-
+          <p>This is a big experiment. Things will break. We don't have all the answers. Sometimes we plan to rely on you to make it work. But we'll try our very darndest to make sure you have a good time, and get something out of it.</p>
         </div>
         <div class="span4">
           <h2><i class="icon-calendar"></i> Weekly Lessons</h2>
           <p>Make friends with some smarties, and start learning from weekly live videos, readings, discussions, and  project-based activities. Open for signup now, course starts February. Questions? Drop us a note in our <a href="https://plus.google.com/u/1/communities/106132864609383396284" target="_blank">Google+ community</a>.</p>
         </div>
 
+	<div style="font-size: 8px;">All materials licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 license</a>.</div>
       </div>
     </div>
 
@@ -131,60 +131,24 @@
               <div class="control-group">
                 <label class="control-label"><i class="icon-group"></i> Your Flavor</label>
                 <div class="controls">
+		     <p class="help-block">What's your instinct when it comes to learning something new? <i>We know you are more complex than this, but if you had to chose one, which is it going to be? (In fact, you have to choose one)</i></p>
                   <label class="radio">
                     <input type="radio" name="flavorRadios" id="flavorRadios1" value="build">
-                    I want to design and create. I’m here to build. 
+                    	I often jump right in and start designing & building.
                   </label>
                   <label class="radio">
                     <input type="radio" name="flavorRadios" id="flavorRadios2" value="understand">
-                     I want to read, think &amp; discuss with others. I’m here to understand.
+			I tend to read, reflect, and discuss with others.
                   </label>
                 </div>
               </div>
               
-              <div class="control-group">
-                <label class="control-label"><i class="icon-book"></i> Your Team</label>
-                <div class="controls">
-                  <p class="help-block">We know you are more complex than this, but if you had to chose one, which is it going to be? (In fact, you have to choose one)</p>
-                  <label class="radio">
-                    <input type="radio" name="teamRadios" id="teamRadios1" value="education">
-                    I come from a land called learning &amp; education
-                  </label>
-                  <label class="radio">
-                    <input type="radio" name="teamRadios" id="teamRadios2" value="computers">
-                    Some of my best friends are computers
-                  </label>
-                  <label class="radio">
-                    <input type="radio" name="teamRadios" id="teamRadios3" value="other">
-                    I’m neither. I’m different.
-                  </label>
-                </div>
-              </div>
-              
-              <div class="control-group">
-                <label class="control-label"><i class="icon-cogs"></i>  Experience</label>
-                <div class="controls">
-                  <label class="radio">
-                    <input type="radio" name="experienceRadios" id="experienceRadios1" value="level1">
-                    Creative what? Learning? Sure, that sounds interesting.
-                  </label>
-                  <label class="radio">
-                    <input type="radio" name="experienceRadios" id="experienceRadios2" value="level2">
-                     I’ve got an idea what this course is about.
-                  </label>
-                  <label class="radio">
-                    <input type="radio" name="experienceRadios" id="experienceRadios3" value="level3">
-                     I’m an expert (also check this, if you are Mitch Resnick).
-                  </label>
-                </div>  
-              </div>
-
               <div class="control-group">
                 <label class="control-label"><i class="icon-cogs"></i> Student</label>
                 <div class="controls">
                   <label class="checkbox">
                    <input type="checkbox" name="studentCheckbox" value=false>
-                    I am currently studying at a college or university. Checking this will not in any way change your experience of the course! We’re just curious.
+                    I am currently studying at a college or university. (<i>Checking this will not in any way change your experience of the course! We’re just curious.</i>)
                   </label>
                 </div>  
               </div>
@@ -270,18 +234,18 @@
               </div>
               
               <div class="control-group">
-                <label class="control-label"><i class="icon-question-sign"></i>  Friends Group (Optional)</label>
+                <label class="control-label"><i class="icon-question-sign"></i>  Join a Team (<i>Optional</i>)</label>
                 <div class="controls">
-                  <p class="help-block">I’ve got an invite code to my friends’ group. Group me with these fools.</p>
+                  <p class="help-block">I’ve got an invite code to my friends’ group. Group me with these folks.</p>
                    <input type="text" name="groupcode" placeholder="Invite code">
                 </div>
               </div>
               
               <div class="control-group">
-                <label class="control-label"><i class="icon-question-sign"></i>  Optional</label>
+                <label class="control-label"><i class="icon-question-sign"></i>  Expectations (<i>Optional</i>)</label>
                 <div class="controls">
                   <p class="help-block">Tell us what you hope to get out of taking the course.</p>
-                    <textarea rows="3" cols="50" name="expectations"></textarea>
+                    <textarea rows="3" cols="50" name="expectations" style="width: 300px;"></textarea>
                 </div>
               </div>
                 
@@ -323,7 +287,7 @@
       $(function () {
         var timezone = jstz.determine();
         $("#timezone").val(timezone.name());
-        $("#timezoneHelp").append("We've pre-selected <span class=\"label label-info\">"+timezone.name()+"</span> using your clock.")
+        $("#timezoneHelp").append("We've pre-selected <span class=\"label label-info\">"+timezone.name()+"</span> using your computer's clock.")
         
         // $("#join").click(function(event){
         //   $("#hiddenEmailField").val($("#email").val());
