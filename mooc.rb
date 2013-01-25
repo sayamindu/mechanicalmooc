@@ -54,8 +54,9 @@ class User
     end
     subject = "Thanks for signing up"
     RestClient.post "https://api:#{ENV['MAILGUN_API_KEY']}"\
-    "@api.mailgun.net/v2/mas712.mailgun.org/messages",
-    :from => "The Machine <the-machine@mas712.mailgun.org>",
+    "@api.mailgun.net/v2/lcl.mechanicalmooc.org/messages",
+    :from => "The Machine <the-machine@lcl.mechanicalmooc.org>",
+    :Reply_to => "mas712-staff@media.mit.edu",
     :to => email,
     :subject => subject,
     :text => body_text,
@@ -64,7 +65,7 @@ class User
 
   def add_user_to_all_list
     RestClient.post("https://api:#{ENV['MAILGUN_API_KEY']}" \
-                    "@api.mailgun.net/v2/lists/all@mas712.mailgun.org/members",
+                    "@api.mailgun.net/v2/lists/all@lcl.mechanicalmooc.org/members",
                     :address => email,
                     :upsert => 'yes')
   end
@@ -96,7 +97,7 @@ class Group
                       :description => timezone)
     RestClient.post("https://api:#{ENV['MAILGUN_API_KEY']}" \
                     "@api.mailgun.net/v2/lists/#{list_address}/members",
-                    :address => "the-machine@mas712.mailgun.org",
+                    :address => "the-machine@lcl.mechanicalmooc.org",
                     :upsert => 'yes')
   end
   
@@ -116,7 +117,7 @@ class Group
   end
   
   def list_address
-    "mas712-#{id}@mas712.mailgun.org"
+    "lcl-#{id}@lcl.mechanicalmooc.org"
   end
 end
 
@@ -161,7 +162,7 @@ post '/signup' do
 end
 
 post '/mooc-mailgun-log' do
-  group_from_header_regex = /mas712-[0-9]{1,4}@mas712.mailgun.org/
+  group_from_header_regex = /lcl-[0-9]{1,4}@lcl.mechanicalmooc.org/
   s = MoocLog.create(
                  :event => params.delete("event").to_s,
                  :recipient => params.delete("recipient").to_s,
