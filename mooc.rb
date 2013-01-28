@@ -52,7 +52,7 @@ class User
       body_html = File.read('emails/signup-confirmation-no-group-code.html')
       body_text = File.read('emails/signup-confirmation-no-group-code.txt')
     end
-    subject = "Thanks for signing up"
+    subject = "Thanks for signing up to Learning Creative Learning"
     RestClient.post "https://api:#{ENV['MAILGUN_API_KEY']}"\
     "@api.mailgun.net/v2/lcl.mechanicalmooc.org/messages",
     :from => "The Machine <the-machine@lcl.mechanicalmooc.org>",
