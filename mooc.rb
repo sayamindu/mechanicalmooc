@@ -149,10 +149,15 @@ get '/' do
 end
 
 post '/signup' do
+  if (params[:studentCheckbox] == "on")
+    student = true
+  else
+    student = false
+  end
   User.create(
     :email => params[:email],
     :flavor => params[:flavorRadios],
-    :real_student => params[:studentCheckbox],
+    :real_student => student,
     :timezone => params[:timezone],
     :group_code => params[:groupcode],
     :expectations => params[:expectations],
