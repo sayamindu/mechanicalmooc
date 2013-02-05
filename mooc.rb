@@ -154,6 +154,7 @@ post '/signup' do
   else
     student = false
   end
+
   user = User.create(
     :email => params[:email],
     :flavor => params[:flavorRadios],
