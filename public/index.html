@@ -279,6 +279,18 @@
       </div>
     </div>
 
+    <div id="error-step" class="container hide">
+      <div class="row">
+        <div class="span12 pagination-centered">
+          <div class="alert alert-danger">
+            <h1>Oops! An error occured.</h1>
+            <h3>Please refresh the page and try again.</h3>
+            <h3>If you continue to have trouble, write to <a href="mailto:medialabcourse@p2pu.org">medialabcourse@p2pu.org</a></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -351,7 +363,11 @@
             $.ajax({  
               type: "POST",  
               url: "/signup",  
-              data: $("#infoForm").serialize(),  
+              data: $("#infoForm").serialize(),
+              error: function() {
+                $("#step2").hide();
+                $("#error-step").show();
+              },
               success: function() {  
                 $("#step2").hide("slide", { direction: "left" } , 500, function() {
                   $("#step3").show("slide", { direction: "right" }, 500);
