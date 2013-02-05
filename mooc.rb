@@ -154,7 +154,7 @@ post '/signup' do
   else
     student = false
   end
-  User.create(
+  user = User.create(
     :email => params[:email],
     :flavor => params[:flavorRadios],
     :real_student => student,
@@ -163,7 +163,11 @@ post '/signup' do
     :expectations => params[:expectations],
     :round => 3
   )
-  "Thanks for signing up, we'll email you soon."
+  if user
+    "Thanks for signing up, we'll email you soon."
+  else
+    status 500
+  end
 end
 
 post '/mooc-mailgun-log' do
