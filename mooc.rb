@@ -168,7 +168,6 @@ post '/signup' do
   else
     student = false
   end
-
   user = User.create(
     :email => params[:email],
     :flavor => params[:flavorRadios],
@@ -176,7 +175,7 @@ post '/signup' do
     :timezone => params[:timezone],
     :group_code => params[:groupcode],
     :expectations => params[:expectations],
-    :round => 3
+    :round => 1
   )
   if user
     "Thanks for signing up, we'll email you soon."
