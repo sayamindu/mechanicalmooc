@@ -43,31 +43,45 @@ class User
   end
   
   def send_welcome_email
-    if group_code.length == 0
-      body_html = File.read('emails/signup-confirmation-group-code.html')
-      body_text = File.read('emails/signup-confirmation-group-code.txt')
-      body_html["{%INVITE_CODE%}"] = id.to_s()
-      body_text["{%INVITE_CODE%}"] = id.to_s()
-    else
-      body_html = File.read('emails/signup-confirmation-no-group-code.html')
-      body_text = File.read('emails/signup-confirmation-no-group-code.txt')
+    begin 
+      if group_code.length == 0
+        body_html = File.read('emails/signup-confirmation-group-code.html')
+        body_text = File.read('emails/signup-confirmation-group-code.txt')
+        body_html["{%INVITE_CODE%}"] = id.to_s()
+        body_text["{%INVITE_CODE%}"] = id.to_s()
+      else
+        body_html = File.read('emails/signup-confirmation-no-group-code.html')
+        body_text = File.read('emails/signup-confirmation-no-group-code.txt')
+      end
+      subject = "Thanks for signing up to Learning Creative Learning"
+      r = RestClient.post "https://api:#{ENV['MAILGUN_API_KEY']}"\
+      "@api.mailgun.net/v2/lcl.mechanicalmooc.org/messages",
+      :from => "The Machine <the-machine@lcl.mechanicalmooc.org>",
+      :reply_to => "mas712-staff@media.mit.edu",
+      :to => email,
+      :subject => subject,
+      :text => body_text,
+      :html => body_html
+    rescue Exception => err
+      puts "RCERROR IN SENDING EMAIL: #{err.inspect}"
+    ensure
+      true
     end
-    subject = "Thanks for signing up to Learning Creative Learning"
-    RestClient.post "https://api:#{ENV['MAILGUN_API_KEY']}"\
-    "@api.mailgun.net/v2/lcl.mechanicalmooc.org/messages",
-    :from => "The Machine <the-machine@lcl.mechanicalmooc.org>",
-    :reply_to => "mas712-staff@media.mit.edu",
-    :to => email,
-    :subject => subject,
-    :text => body_text,
-    :html => body_html
+    true
   end
 
   def add_user_to_all_list
-    RestClient.post("https://api:#{ENV['MAILGUN_API_KEY']}" \
-                    "@api.mailgun.net/v2/lists/all@lcl.mechanicalmooc.org/members",
-                    :address => email,
-                    :upsert => 'yes')
+    begin
+      RestClient.post("https://api:#{ENV['MAILGUN_API_KEY']}" \
+                      "@api.mailgun.net/v2/lists/all@lcl.mechanicalmooc.org/members",
+                      :address => email,
+                      :upsert => 'yes')
+    rescue Exception => err
+      puts "RCERROR IN ADDING TO LIST: #{err.inspect}"
+    ensure
+      true
+    end
+    true
   end
 
 end
