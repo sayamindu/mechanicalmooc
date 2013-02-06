@@ -365,9 +365,18 @@
               type: "POST",  
               url: "/signup",  
               data: $("#infoForm").serialize(),
+              timeout: 20000,
+              tryCount: 0,
+              retryLimit: 5,
               error: function() {
-                $("#step2").hide();
-                $("#error-step").show();
+                this.tryCount++;
+                if (this.tryCount <= this.retryLimit) {
+                  $.ajax(this);
+                  return;
+                } else {
+                  $("#step2").hide();
+                  $("#error-step").show();
+                }
               },
               success: function() {  
                 $("#step2").hide("slide", { direction: "left" } , 500, function() {
